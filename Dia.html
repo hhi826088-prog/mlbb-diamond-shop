@@ -1,0 +1,626 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="my">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090914">
+<title>MLBB Top-Up Zone</title>
+<style>
+:root {
+  --bg:#090914;
+  --card:#131326;
+  --purple:#a855f7;
+  --blue:#38bdf8;
+  --text:#f5f3ff;
+  --muted:#aaa8c3;
+  --border:#33304d;
+}
+* {box-sizing:border-box}
+body {
+  margin:0;
+  background:radial-gradient(ellipse at top,#211044 0%,var(--bg) 55%);
+  color:var(--text);
+  font-family:system-ui,-apple-system,sans-serif;
+}
+header {
+  padding:22px 16px;
+  text-align:center;
+  border-bottom:1px solid var(--border);
+  background:#0c0b18eF;
+  position:sticky;
+  top:0;
+  z-index:5;
+  backdrop-filter:blur(15px);
+}
+.logo {
+  font-size:23px;
+  font-weight:900;
+  background:linear-gradient(90deg,#c084fc,#38bdf8);
+  color:transparent;
+  background-clip:text;
+}
+header p {margin:5px 0 0;color:var(--muted);font-size:12px}
+.container {max-width:650px;margin:auto;padding:18px 14px 45px}
+.hero {
+  padding:24px 16px;
+  border-radius:20px;
+  background:linear-gradient(135deg,#30105b,#102c52);
+  border:1px solid #7652b8;
+  box-shadow:0 0 25px #8b5cf633;
+  margin-bottom:20px;
+}
+.hero h1 {font-size:25px;margin:0 0 8px}
+.hero p {color:#d5cbea;font-size:13px;line-height:1.7;margin:0}
+.tag {
+  display:inline-block;
+  background:#a855f722;
+  border:1px solid #a855f7;
+  border-radius:20px;
+  padding:5px 10px;
+  font-size:11px;
+  margin-bottom:12px;
+}
+.section {
+  background:#111120eF;
+  border:1px solid var(--border);
+  border-radius:17px;
+  padding:17px;
+  margin-bottom:17px;
+}
+.section-title {
+  font-size:17px;
+  font-weight:800;
+  margin:0 0 15px;
+}
+.step {
+  color:var(--blue);
+  margin-right:6px;
+}
+label {display:block;font-size:13px;margin:13px 0 7px;color:#ded9f2}
+input,select,textarea {
+  width:100%;
+  padding:13px;
+  border-radius:10px;
+  border:1px solid #393651;
+  background:#0b0b17;
+  color:white;
+  font:inherit;
+  font-size:14px;
+  outline:none;
+}
+input:focus,select:focus {border-color:var(--purple)}
+small,.muted {color:var(--muted);font-size:12px;line-height:1.7}
+.packages {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+.package {
+  text-align:left;
+  padding:14px 10px;
+  min-width:0;
+  border:1px solid #38334f;
+  border-radius:13px;
+  background:linear-gradient(145deg,#19152b,#101321);
+  color:white;
+  cursor:pointer;
+}
+.package.active {
+  border:1px solid var(--blue);
+  background:linear-gradient(145deg,#35205b,#112f48);
+  box-shadow:0 0 14px #38bdf822;
+}
+.diamond {font-size:23px}
+.package strong {display:block;font-size:14px;margin:5px 0}
+.package span {font-size:12px;color:#c4b5fd}
+.price {font-size:13px;color:#67e8f9!important;font-weight:bold}
+.payment-option {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:13px;
+  border:1px solid #393651;
+  border-radius:12px;
+  margin:9px 0;
+  cursor:pointer;
+}
+.payment-option:has(input:checked) {border-color:var(--purple);background:#a855f715}
+.payment-option input {width:17px;accent-color:var(--purple)}
+.payment-option div {flex:1}
+.payment-option strong {font-size:14px}
+.payment-option small {display:block}
+.summary-row {
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  padding:9px 0;
+  border-bottom:1px solid #29263c;
+  font-size:13px;
+}
+.summary-row span:first-child {color:var(--muted)}
+.total {font-size:18px;font-weight:900;color:#67e8f9}
+button {
+  font:inherit;
+  cursor:pointer;
+}
+.primary {
+  width:100%;
+  border:0;
+  padding:15px;
+  border-radius:12px;
+  background:linear-gradient(90deg,#9333ea,#2563eb);
+  color:white;
+  font-weight:800;
+  margin-top:14px;
+  box-shadow:0 5px 18px #7c3aed33;
+}
+.secondary {
+  background:#1d1a30;
+  color:white;
+  border:1px solid var(--border);
+  padding:10px 12px;
+  border-radius:9px;
+}
+.danger {background:#4a1827;border-color:#9f3151}
+.notice {
+  padding:12px;
+  border-radius:10px;
+  background:#f59e0b12;
+  border:1px solid #f59e0b55;
+  color:#fcdba0;
+  font-size:12px;
+  line-height:1.8;
+}
+.hidden {display:none!important}
+.order {
+  padding:13px;
+  background:#0b0b17;
+  border:1px solid var(--border);
+  border-radius:12px;
+  margin-top:10px;
+  overflow-wrap:anywhere;
+}
+.order h3 {font-size:14px;margin:0 0 8px}
+.order p {font-size:12px;color:var(--muted);line-height:1.8;margin:5px 0}
+.status {color:#fbbf24;font-weight:bold}
+footer {text-align:center;color:var(--muted);font-size:11px;padding:18px;line-height:1.9}
+hr {border:0;border-top:1px solid var(--border);margin:16px 0}
+@media(min-width:500px) {
+  .packages {grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">💎 MLBB TOP-UP ZONE</div>
+  <p>FAST • EASY • SECURE TOP-UP</p>
+</header>
+
+<main class="container">
+
+  <div class="hero">
+    <span class="tag">⚡ DIAMOND CENTER</span>
+    <h1>Diamond Top-Up 💎</h1>
+    <p>ကြိုက်နှစ်သက်ရာ Package ကိုရွေးပြီး
+    Player ID ဖြည့်ကာ Order တင်နိုင်ပါပြီ။</p>
+  </div>
+
+  <div class="notice" style="margin-bottom:17px">
+    ⚠️ DEMO WEBSITE -- အောက်ပါဈေးနှုန်းများသည်
+    နမူနာသာဖြစ်သည်။ တကယ့်ရောင်းချမှုမစတင်မီ
+    ဈေးနှုန်းနှင့် ငွေလက်ခံအကောင့်ကို အတည်ပြုပါ။
+  </div>
+
+  <form id="orderForm">
+
+    <section class="section">
+      <h2 class="section-title">
+        <span class="step">01.</span> Player Information
+      </h2>
+
+      <label for="playerId">Player ID *</label>
+      <input id="playerId" inputmode="numeric"
+        maxlength="20" placeholder="ဥပမာ - 123456789"
+        required pattern="[0-9]+">
+
+      <label for="serverId">Server ID *</label>
+      <input id="serverId" inputmode="numeric"
+        maxlength="10" placeholder="ဥပမာ - 1234"
+        required pattern="[0-9]+">
+
+      <label for="playerName">Player Name (မဖြစ်မနေမဟုတ်ပါ)</label>
+      <input id="playerName" maxlength="40"
+        placeholder="Game ထဲက နာမည်">
+
+      <small>⚠️ Player ID / Server ID သာလိုအပ်ပါတယ်။
+      Game Password နဲ့ OTP ကို မထည့်ပါနဲ့။</small>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">
+        <span class="step">02.</span> Select Package
+      </h2>
+
+      <div class="packages" id="packages"></div>
+      <input type="hidden" id="packageId" required>
+
+      <label for="quantity">အရေအတွက်</label>
+      <select id="quantity">
+        <option value="1">1 Package</option>
+        <option value="2">2 Packages</option>
+        <option value="3">3 Packages</option>
+        <option value="5">5 Packages</option>
+      </select>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">
+        <span class="step">03.</span> Payment Method
+        
+<div style="background:#182238;padding:16px;border-radius:12px;margin:12px 0;border:1px solid #00f5ff;">
+  <h3 style="color:#00f5ff;margin-top:0;">💳 KBZPay ငွေလွှဲရန်</h3>
+  <p style="color:white;">📱 ဖုန်းနံပါတ်: <strong>09675986736</strong></p>
+  <p style="color:white;">👤 အကောင့်အမည်: <strong>Linn Htet Aung</strong></p>
+  <p style="color:#ffd166;font-size:13px;">
+    ငွေမလွှဲမီ အကောင့်အမည်နှင့် ဖုန်းနံပါတ်ကို စစ်ဆေးပါ။
+  </p>
+</div>
+
+      </h2>
+
+      <label class="payment-option">
+        <input type="radio" name="payment" value="KBZPay" required>
+        <div>
+          <strong>🔵 KBZPay</strong>
+          <small>KBZPay ဖြင့် ငွေပေးချေရန်</small>
+        </div>
+      </label>
+
+      <label class="payment-option">
+        <input type="radio" name="payment" value="WavePay" required>
+        <div>
+          <strong>🟡 WavePay</strong>
+          <small>WavePay ဖြင့် ငွေပေးချေမရပါ Sorry<small>
+        </div>
+      </label>
+
+      <div class="notice" style="margin-top:13px">
+        ငွေလွှဲအကောင့်ကို Shop ပိုင်ရှင်က Backend
+        သို့မဟုတ် ယုံကြည်စိတ်ချရသော ဆက်သွယ်ရေးလမ်းကြောင်းမှ
+        အတည်ပြုပြီးမှသာ ငွေလွှဲပါ။
+        ဤ Demo တွင် တကယ့်ငွေလက်ခံမှု မရှိသေးပါ။
+      </div>
+
+      <label for="receipt">ငွေလွှဲပြေစာ (ရွေးချယ်နိုင်သည်)</label>
+      <input type="file" id="receipt" accept="image/*">
+      <div id="receiptPreview" class="muted"></div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">
+        <span class="step">04.</span> Order Summary
+      </h2>
+
+      <div class="summary-row">
+        <span>Package</span><strong id="summaryPackage">မရွေးရသေးပါ</strong>
+      </div>
+      <div class="summary-row">
+        <span>အရေအတွက်</span><strong id="summaryQuantity">1</strong>
+      </div>
+      <div class="summary-row">
+        <span>ငွေပေးချေမှု</span><strong id="summaryPayment">မရွေးရသေးပါ</strong>
+      </div>
+      <div class="summary-row">
+        <span>စုစုပေါင်း</span><strong class="total" id="summaryTotal">0 Ks</strong>
+      </div>
+
+      <button class="primary" type="submit">
+        🛒 Order တင်မယ်
+      </button>
+    </section>
+  </form>
+
+  <section class="section">
+    <h2 class="section-title">📦 My Orders</h2>
+    <p class="muted">ဒီဖုန်း Browser ထဲမှာ သိမ်းထားတဲ့ Demo Order များ</p>
+    <div id="orders"></div>
+    <button class="secondary" id="refreshOrders" type="button">
+      🔄 ပြန်ကြည့်မယ်
+    </button>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">🔐 Demo Admin</h2>
+    <p class="muted">
+      စမ်းသပ်အသုံးပြုရန်သာဖြစ်သည်။ အမှန်တကယ် Admin Login
+      သို့မဟုတ် Server Security မပါဝင်ပါ။
+    </p>
+    <button class="secondary" id="adminToggle" type="button">
+      Admin Demo ဖွင့်ရန်
+    </button>
+    <div id="adminPanel" class="hidden">
+      <hr>
+      <div id="adminOrders"></div>
+      <button class="secondary" id="exportOrders" type="button">
+        Export Order JSON
+      </button>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  MLBB TOP-UP ZONE © 2026<br>
+  Demo Version -- Backend Integration Required<br>
+  သင့် Game Password၊ OTP နှင့် ဘဏ်လျှို့ဝှက်အချက်အလက်များကို
+  ဘယ်သူ့ကိုမှ မပေးပါနှင့်။
+</footer>
+
+<script>
+"use strict";
+
+/*
+ DEMO ONLY:
+ Orders are stored in this browser's localStorage.
+ No real payment verification, Telegram bot or backend.
+ Do not use browser storage as a production order database.
+*/
+
+const packages = [
+  {id:"p86",name:"86 Diamonds",diamonds:86,price:3000},
+  {id:"p172",name:"172 Diamonds",diamonds:172,price:5800},
+  {id:"p257",name:"257 Diamonds",diamonds:257,price:8500},
+  {id:"p344",name:"344 Diamonds",diamonds:344,price:11200},
+  {id:"p706",name:"706 Diamonds",diamonds:706,price:22500},
+  {id:"pWeekly",name:"Weekly Pass",diamonds:0,price:6500}
+];
+
+const $ = id => document.getElementById(id);
+let selectedPackage = null;
+let receiptData = "";
+
+function money(n) {
+  return Number(n).toLocaleString("en-US") + " Ks";
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, c => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",
+    '"':"&quot;","'":"&#39;"
+  })[c]);
+}
+
+function renderPackages() {
+  $("packages").innerHTML = packages.map(p => `
+    <button type="button"
+      class="package ${selectedPackage === p.id ? "active" : ""}"
+      data-package="${p.id}">
+      <div class="diamond">${p.diamonds ? "💎" : "🎟️"}</div>
+      <strong>${p.name}</strong>
+      <span class="price">${money(p.price)}</span>
+    </button>
+  `).join("");
+
+  $("packages").querySelectorAll("[data-package]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      selectedPackage = btn.dataset.package;
+      $("packageId").value = selectedPackage;
+      renderPackages();
+      updateSummary();
+    });
+  });
+}
+
+function getPayment() {
+  const item = document.querySelector('input[name="payment"]:checked');
+  return item ? item.value : "";
+}
+
+function getTotal() {
+  const p = packages.find(x => x.id === selectedPackage);
+  return p ? p.price * Number($("quantity").value) : 0;
+}
+
+function updateSummary() {
+  const p = packages.find(x => x.id === selectedPackage);
+  $("summaryPackage").textContent = p ? p.name : "မရွေးရသေးပါ";
+  $("summaryQuantity").textContent = $("quantity").value;
+  $("summaryPayment").textContent = getPayment() || "မရွေးရသေးပါ";
+  $("summaryTotal").textContent = money(getTotal());
+}
+
+function getOrders() {
+  try {
+    const data = JSON.parse(localStorage.getItem("mlbb_demo_orders") || "[]");
+    return Array.isArray(data) ? data : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveOrders(orders) {
+  localStorage.setItem("mlbb_demo_orders", JSON.stringify(orders));
+}
+
+function renderOrders() {
+  const orders = getOrders();
+
+  if (!orders.length) {
+    $("orders").innerHTML =
+      '<p class="muted">Order မရှိသေးပါ။ Package ရွေးပြီး Order တင်ပါ။</p>';
+  } else {
+    $("orders").innerHTML = orders.slice().reverse().map(o => `
+      <div class="order">
+        <h3>📦 ${escapeHTML(o.id)}</h3>
+        <p>
+          Package: ${escapeHTML(o.package)}<br>
+          Player ID: ${escapeHTML(o.playerId)} (${escapeHTML(o.serverId)})<br>
+          Payment: ${escapeHTML(o.payment)}<br>
+          Total: ${money(o.total)}<br>
+          Status: <span class="status">${escapeHTML(o.status)}</span><br>
+          Date: ${escapeHTML(o.date)}
+        </p>
+      </div>
+    `).join("");
+  }
+
+  renderAdminOrders();
+}
+
+$("receipt").addEventListener("change", function() {
+  const file = this.files && this.files[0];
+  receiptData = "";
+  $("receiptPreview").textContent = "";
+
+  if (!file) return;
+
+  if (!file.type.startsWith("image/")) {
+    alert("Image ဖိုင်ကိုသာ ရွေးပါ။");
+    this.value = "";
+    return;
+  }
+
+  if (file.size > 3 * 1024 * 1024) {
+    alert("Demo အတွက် Image အရွယ်အစားကို 3 MB အောက်ထားပါ။");
+    this.value = "";
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    receiptData = String(reader.result || "");
+    $("receiptPreview").textContent =
+      "ပြေစာရွေးပြီးပါပြီ: " + file.name +
+      " (ဒီ Demo မှာ Server ကို Upload မလုပ်ပါ)";
+  };
+  reader.readAsDataURL(file);
+});
+
+$("quantity").addEventListener("change", updateSummary);
+document.querySelectorAll('input[name="payment"]').forEach(el => {
+  el.addEventListener("change", updateSummary);
+});
+
+$("orderForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  if (!selectedPackage) {
+    alert("Diamond Package တစ်ခု ရွေးပေးပါ။");
+    return;
+  }
+
+  if (!this.reportValidity()) return;
+
+  const p = packages.find(x => x.id === selectedPackage);
+  const orders = getOrders();
+  const order = {
+    id: "DEMO-" + Date.now().toString(36).toUpperCase(),
+    playerId: $("playerId").value.trim(),
+    serverId: $("serverId").value.trim(),
+    playerName: $("playerName").value.trim(),
+    package: p.name,
+    quantity: Number($("quantity").value),
+    payment: getPayment(),
+    total: getTotal(),
+    status: "စစ်ဆေးရန်",
+    date: new Date().toLocaleString(),
+    receiptSelected: Boolean(receiptData)
+  };
+
+  orders.push(order);
+
+  try {
+    saveOrders(orders);
+  } catch {
+    alert("Browser Storage ပြည့်နေနိုင်ပါတယ်။ ပြေစာဖိုင် မသိမ်းဘဲ ထပ်စမ်းကြည့်ပါ။");
+    return;
+  }
+
+  alert(
+    "Demo Order တင်ပြီးပါပြီ။\n" +
+    "Order ID: " + order.id +
+    "\nစုစုပေါင်း: " + money(order.total) +
+    "\n\nသတိပြုရန်: ဒီ Order ကို Shop ပိုင်ရှင်ထံ အမှန်တကယ် မပို့ရသေးပါ။"
+  );
+
+  this.reset();
+  selectedPackage = null;
+  receiptData = "";
+  $("packageId").value = "";
+  $("receiptPreview").textContent = "";
+  renderPackages();
+  updateSummary();
+  renderOrders();
+
+  $("orders").scrollIntoView({behavior:"smooth",block:"start"});
+});
+
+function renderAdminOrders() {
+  const orders = getOrders();
+
+  if (!orders.length) {
+    $("adminOrders").innerHTML = '<p class="muted">Order မရှိသေးပါ။</p>';
+    return;
+  }
+
+  $("adminOrders").innerHTML = orders.map((o, i) => `
+    <div class="order">
+      <h3>${escapeHTML(o.id)}</h3>
+      <p>
+        ${escapeHTML(o.package)} · ${money(o.total)}<br>
+        Player: ${escapeHTML(o.playerId)} (${escapeHTML(o.serverId)})<br>
+        Payment: ${escapeHTML(o.payment)}
+      </p>
+      <label for="status-${i}">Demo Status</label>
+      <select id="status-${i}" data-status-index="${i}">
+        ${["စစ်ဆေးရန်","ငွေလက်ခံပြီး","လုပ်ဆောင်နေ","ပြီးဆုံး","ပယ်ဖျက်"].map(s =>
+          `<option ${o.status === s ? "selected" : ""}>${s}</option>`
+        ).join("")}
+      </select>
+      <button class="secondary" data-save-status="${i}" type="button">
+        Status သိမ်းမယ်
+      </button>
+    </div>
+  `).join("");
+
+  $("adminOrders").querySelectorAll("[data-save-status]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const i = Number(btn.dataset.saveStatus);
+      const orders = getOrders();
+      const select = $("status-" + i);
+      if (!orders[i] || !select) return;
+      orders[i].status = select.value;
+      saveOrders(orders);
+      renderOrders();
+      alert("Demo Status ပြောင်းပြီးပါပြီ။");
+    });
+  });
+}
+
+$("adminToggle").addEventListener("click", () => {
+  $("adminPanel").classList.toggle("hidden");
+  renderAdminOrders();
+});
+
+$("refreshOrders").addEventListener("click", renderOrders);
+
+$("exportOrders").addEventListener("click", () => {
+  const blob = new Blob(
+    [JSON.stringify(getOrders(), null, 2)],
+    {type:"application/json"}
+  );
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "mlbb-demo-orders.json";
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+renderPackages();
+updateSummary();
+renderOrders();
+</script>
+</body>
+</html>
